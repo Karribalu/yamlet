@@ -4,8 +4,8 @@ cloud: AWS
 region: us-west-2
 metadata:
   name: ec2-sample-model
-modulpack:
-  verion: v0.1.0
+module_pack:
+  version: v0.1.0
 components:
   - type: EC2Instance # ecs-instance
     name: ec2-sample-instance

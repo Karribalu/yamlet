@@ -1,6 +1,6 @@
 pub mod credentials;
-pub mod ec2;
 pub mod internal;
+pub mod ec2;
 
 #[derive(Debug, Clone)]
 pub enum AWSClient {

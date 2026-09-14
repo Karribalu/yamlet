@@ -1,15 +1,15 @@
 #[cfg(test)]
 mod tests {
     use std::any::Any;
-    use std::sync::Arc;
     use std::sync::atomic::{AtomicUsize, Ordering};
+    use std::sync::Arc;
     use std::time::Duration;
 
     use aws_config::BehaviorVersion;
     use aws_types::region::Region;
 
-    use crate::aws::AWSClient;
     use crate::aws::internal::wait_and_refresh::{RefreshFunction, StateChangeConfig, WaitError};
+    use crate::aws::AWSClient;
 
     fn test_client() -> AWSClient {
         let sdk_config = aws_types::SdkConfig::builder()

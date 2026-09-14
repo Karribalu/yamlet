@@ -1,0 +1,1 @@
+pub const YAMLET_UNKNOWN_VARIABLE_VALUE: &str = "2a8cd4d2-90f5-4076-9237-4448cb8af55b";

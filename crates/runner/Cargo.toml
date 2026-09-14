@@ -1,0 +1,12 @@
+[package]
+name = "runner"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+aws-provider = { path = "../aws-provider" }
+yamlet-core = { path = "../yamlet-core" }
+tokio = { version = "1.48.0", features = ["full"] }
+tracing = "0.1.41"
+tracing-subscriber = "0.3.20"
+tonic = { version = "0.12", features = ["transport"] }

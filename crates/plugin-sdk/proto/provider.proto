@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package yamlet.provider.v1;
+
+import "google/protobuf/struct.proto";
+
+// Generic dependency reference
+message Dependency {
+  string type = 1;
+  string name = 2;
+}
+
+// Component specification from YAML
+message ComponentSpec {
+  string component_type = 1; // e.g., EC2Instance
+  string name = 2;
+  google.protobuf.Struct properties = 3;
+  repeated Dependency depends_on = 4;
+  repeated Dependency connects_to = 5;
+}
+
+// Context for the infrastructure deployment
+message InfraContext {
+  string deployment_name = 1; // metadata.name
+  string workspace = 2;       // logical workspace/environment
+  string cloud = 3;           // e.g., AWS
+  string region = 4;          // e.g., us-east-1
+  map<string, string> variables = 5; // extra vars if needed
+}
+
+message PlanRequest {
+  InfraContext context = 1;
+  ComponentSpec component = 2;
+}
+
+message PlanResponse {
+  bool supported = 1;
+  string plan_summary = 2; // textual summary
+  google.protobuf.Struct computed = 3; // computed defaults / interpolations
+}
+
+message ApplyRequest {
+  InfraContext context = 1;
+  ComponentSpec component = 2;
+}
+
+message ApplyResponse {
+  bool success = 1;
+  string resource_id = 2; // provider-specific ID
+  google.protobuf.Struct outputs = 3; // outputs for connectsTo/refs
+  string error_message = 4;
+}
+
+message DestroyRequest {
+  InfraContext context = 1;
+  ComponentSpec component = 2;
+}
+
+message DestroyResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+message GetCapabilitiesRequest {}
+message GetCapabilitiesResponse {
+  repeated string resource_types = 1; // e.g., ["EC2Instance", "S3Bucket"]
+}
+
+service Provider {
+  rpc GetCapabilities(GetCapabilitiesRequest) returns (GetCapabilitiesResponse);
+  rpc Plan(PlanRequest) returns (PlanResponse);
+  rpc Apply(ApplyRequest) returns (ApplyResponse);
+  rpc Destroy(DestroyRequest) returns (DestroyResponse);
+}

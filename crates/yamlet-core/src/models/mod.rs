@@ -1,8 +1,7 @@
 use core::fmt;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
-use std::{collections::HashMap, hash::Hash};
-pub mod state;
+use std::hash::Hash;
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, Hash)]
 pub enum Kind {
     #[serde(rename = "Infra")]
@@ -101,7 +100,7 @@ impl InfraConfig {
 }
 
 impl Component {
-    /// Get a property value by key
+    /// Get a property typing by key
     pub fn get_property(&self, key: &str) -> Option<&serde_yaml::Value> {
         self.properties.get(key)
     }
